@@ -1,7 +1,7 @@
 # KaggleProj
 ---
 ## Apple Store
-here we will show some trends in the Apple Store Data using Matplotlib and Seaboen
+here we will show some trends in the Apple Store Data using Matplotlib and Seaborn
 ### Matplotlib Graphs
 ![alt text](https://github.com/MtheEPIC/KaggleProj/blob/master/graphs/plt1.png)
 ![alt text](https://github.com/MtheEPIC/KaggleProj/blob/master/graphs/plt2.png)
@@ -77,3 +77,32 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 ```
 
 ### Models to use for predictions
+note that the new fraud detection system makes the models run very well (even to well)
+after reading in the [Card Fraud Dataset](https://www.kaggle.com/ntnu-testimon/paysim1/discussion/99799 "Synthetic Financial Datasets For Fraud Detection") we can see that it's that because this data is synthetic this one attribute is very crucial
+
+The models we will use are:
+* Decision Tree
+* Logistic Regression
+* Random Forest
+* Linear SVC
+
+the best model is Random Forest:
+```
+clf = RandomForestClassifier(max_depth=None, random_state=0, n_estimators=10)
+clf.fit(X_train, y_train)
+predictions=clf.predict(X_test)
+evaluate(y_test, predictions)
+
+              precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00    552404
+         1.0       1.00      1.00      1.00      1678
+
+    accuracy                           1.00    554082
+   macro avg       1.00      1.00      1.00    554082
+weighted avg       1.00      1.00      1.00    554082
+
+[[552404      0]
+ [     8   1670]]
+0.9999855617038633
+```
