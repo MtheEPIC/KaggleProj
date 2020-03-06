@@ -1,5 +1,7 @@
 # KaggleProj
 ---
+[![alt text](https://avatars1.githubusercontent.com/u/59831504?s=400&v=4 "MtheEPIC User Icon")](https://github.com/MtheEPIC/KaggleProj)
+by Mth
 ## Apple Store
 here we will show some trends in the Apple Store Data using Matplotlib and Seaborn
 ### Matplotlib Graphs
