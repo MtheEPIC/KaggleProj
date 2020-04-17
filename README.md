@@ -1,7 +1,8 @@
 # KaggleProj
 ---
 [![alt text](https://avatars1.githubusercontent.com/u/59831504?s=400&v=4 "MtheEPIC User Icon")](https://github.com/MtheEPIC/KaggleProj)
-by Mth
+by MtheEPIC
+(use git lfs or the link in the card fraud section for the data base)
 ## Apple Store
 here we will show some trends in the Apple Store Data using Matplotlib and Seaborn
 ### Matplotlib Graphs
@@ -51,7 +52,8 @@ df[df['amount'] == df['oldbalanceOrg']]['isFraud'].unique()
 df[df['isFlaggedFraud'] == 1]['isFraud'].unique()
 ```
 
-### Clear data from unneeded values for the model
+### Clear and Prepare data
+#### For example:
 based on the trends we can remove the transaction without fraud and create an improved fraud system
 ```
 d1 = df[df['type']=='TRANSFER']
@@ -60,16 +62,7 @@ d1['type'] = 1
 d2['type'] = 0
 df = pd.concat([d1, d2])
 df.head()
-
-df['myFraud'] = df['isFlaggedFraud']
-size = len(df[df['amount']==df['oldbalanceOrg']]['myFraud'])
-d1 = df[df['amount']==df['oldbalanceOrg']]['myFraud']
-d2 = df[df['amount']!=df['oldbalanceOrg']]['myFraud']
-d1 = d1.replace(0, 1)
-df['myFraud'] = pd.concat([d1, d2])
 ```
-
-### Prepare the data for the models
 remove the data that we don't need
 ```
 df = df.drop(['nameOrig', 'nameDest', 'isFlaggedFraud', 'step'], axis=1)
@@ -83,28 +76,29 @@ note that the new fraud detection system makes the models run very well (even to
 after reading in the [Card Fraud Dataset](https://www.kaggle.com/ntnu-testimon/paysim1/discussion/99799 "Synthetic Financial Datasets For Fraud Detection") we can see that it's that because this data is synthetic this one attribute is very crucial
 
 The models we will use are:
+* Naive Bayes
 * Decision Tree
+* Adaboost
 * Logistic Regression
 * Random Forest
 * Linear SVC
 
+(knn takes __too__ much time)
+
 the best model is Random Forest:
 ```
-clf = RandomForestClassifier(max_depth=None, random_state=0, n_estimators=10)
-clf.fit(X_train, y_train)
-predictions=clf.predict(X_test)
-evaluate(y_test, predictions)
-
+Model AUC Score: 0.94935
+threshold: 0.02946730172263339
+The model is better then a 'dumb' model
+confusion_matrix:
+ [[551096   1308]
+ [   166   1512]]
               precision    recall  f1-score   support
 
-         0.0       1.00      1.00      1.00    552404
-         1.0       1.00      1.00      1.00      1678
+           0       1.00      1.00      1.00    552404
+           1       0.54      0.90      0.67      1678
 
     accuracy                           1.00    554082
-   macro avg       1.00      1.00      1.00    554082
+   macro avg       0.77      0.95      0.84    554082
 weighted avg       1.00      1.00      1.00    554082
-
-[[552404      0]
- [     8   1670]]
-0.9999855617038633
 ```
